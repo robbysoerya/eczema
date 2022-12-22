@@ -1,0 +1,13 @@
+{
+    "@@locale": "id",
+    "testTitle": "Halo",
+    "@testTitle": {
+        "description": "Text show in blablabla"
+    },
+    "guessNationalityAppBarTitle": "Tebak Kenegaraan",
+    "@guessNationalityAppBarTitle": {
+        "description": "App bar title for Guess Nationality Page"
+    },
+    "guessNationalityButtonTitle": "Tebak",
+    "guessNationalityHintTextField": "Masukan nama kamu"
+}
