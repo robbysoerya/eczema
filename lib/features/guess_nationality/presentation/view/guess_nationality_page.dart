@@ -1,4 +1,5 @@
 import 'package:eczema/core/core.dart';
+import 'package:eczema/core/mixins/error_handling_mixin.dart';
 import 'package:eczema/core/utils/localizations_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,8 +14,7 @@ class GuessNationalityPage extends BasePage {
 }
 
 class _GuessNationalityPageState extends BaseState<GuessNationalityPage>
-    with BasicPageMixin {
-
+    with BasicPageMixin, ErrorHandlingErrorMixin {
   @override
   String screenName() => Strings.of(context).guessNationalityAppBarTitle;
 
@@ -25,7 +25,7 @@ class _GuessNationalityPageState extends BaseState<GuessNationalityPage>
     if (state is GuessNationalityLoading) {
       return const CircularProgressIndicator();
     } else if (state is GuessNationalityFailure) {
-      return Text(state.failure.message);
+      return errorWidget(state.failure);
     } else if (state is GuessNationalityLoaded) {
       return Padding(
         padding: const EdgeInsets.all(16.0),

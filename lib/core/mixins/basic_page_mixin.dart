@@ -1,4 +1,4 @@
-import 'package:eczema/core/base/base_page.dart';
+import 'package:eczema/core/core.dart';
 import 'package:flutter/material.dart';
 
 mixin BasicPageMixin<Page extends BasePage> on BaseState<Page> {
