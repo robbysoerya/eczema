@@ -27,4 +27,8 @@ class GuessNationalityNotifier
       },
     );
   }
+
+  void reset() {
+    state = GuessNationalityInitial();
+  }
 }

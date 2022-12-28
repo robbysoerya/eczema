@@ -9,5 +9,10 @@
         "description": "App bar title for Guess Nationality Page"
     },
     "guessNationalityButtonTitle": "Guess",
-    "guessNationalityHintTextField": "Enter your name"
+    "guessNationalityHintTextField": "Enter your name",
+    "loginTitle": "Login",
+    "logoutTitle": "Logout",
+    "resetButtonTitle": "Reset",
+    "loginUsernameHint": "Enter username",
+    "loginPasswordHint": "Enter password"
 }

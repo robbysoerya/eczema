@@ -1,20 +1,16 @@
 import 'package:eczema/core/core.dart';
-import 'package:eczema/core/mixins/error_handling_mixin.dart';
-import 'package:eczema/core/utils/localizations_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eczema/features/guess_nationality/presentation/providers/providers.dart';
 
 class GuessNationalityPage extends BasePage {
   const GuessNationalityPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _GuessNationalityPageState();
+  BaseState<GuessNationalityPage> createState() => _GuessNationalityPageState();
 }
 
 class _GuessNationalityPageState extends BaseState<GuessNationalityPage>
-    with BasicPageMixin, ErrorHandlingErrorMixin {
+    with BasicPageMixin, ErrorHandlingMixin {
   @override
   String screenName() => Strings.of(context).guessNationalityAppBarTitle;
 
@@ -23,17 +19,23 @@ class _GuessNationalityPageState extends BaseState<GuessNationalityPage>
     final state = ref.watch(guessNationalityStateNotifierProvider);
 
     if (state is GuessNationalityLoading) {
-      return const CircularProgressIndicator();
+      return const Center(child: CircularProgressIndicator());
     } else if (state is GuessNationalityFailure) {
       return errorWidget(state.failure);
     } else if (state is GuessNationalityLoaded) {
-      return Padding(
+      return Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: List.generate(
-            state.entity.country.length,
-            (index) => Text(state.entity.country[index].countryId),
-          ),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(
+                state.entity.country.length,
+                (index) => Text(state.entity.country[index].countryId),
+              ),
+            ),
+            _buildResetButton()
+          ],
         ),
       );
     }
@@ -43,23 +45,52 @@ class _GuessNationalityPageState extends BaseState<GuessNationalityPage>
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: Strings.of(context).guessNationalityHintTextField,
-              ),
-            ),
+            _buildInputName(),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                ref
-                    .read(guessNationalityStateNotifierProvider.notifier)
-                    .guess();
-              },
-              child: Text(Strings.of(context).guessNationalityButtonTitle),
-            ),
+            _buildGuessButton(),
+            const SizedBox(height: 24.0),
+            _buildLogout(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildInputName() {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: Strings.of(context).guessNationalityHintTextField,
+      ),
+    );
+  }
+
+  Widget _buildGuessButton() {
+    return ElevatedButton(
+      onPressed: () {
+        ref.read(guessNationalityStateNotifierProvider.notifier).guess();
+      },
+      child: Text(Strings.of(context).guessNationalityButtonTitle),
+    );
+  }
+
+  Widget _buildResetButton() {
+    return ElevatedButton(
+      onPressed: () =>
+          ref.read(guessNationalityStateNotifierProvider.notifier).reset(),
+      child: Text(Strings.of(context).resetButtonTitle),
+    );
+  }
+
+  Widget _buildLogout() {
+    final isAuth = ref.read(authNotifierProvider).value;
+
+    if (isAuth == null) return const SizedBox();
+
+    return ElevatedButton(
+      onPressed: () {
+        ref.read(authNotifierProvider.notifier).logout();
+      },
+      child: Text(Strings.of(context).logoutTitle),
     );
   }
 }

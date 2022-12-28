@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AppProviderOberserver extends ProviderObserver {
   @override
@@ -52,10 +53,18 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   await runZonedGuarded(
-    () async => runApp(ProviderScope(
-      observers: [AppProviderOberserver()],
-      child: await builder(),
-    )),
+    () async {
+      await Hive.initFlutter();
+      await Hive.openBox('config');
+      runApp(
+        ProviderScope(
+          observers: [
+            AppProviderOberserver(),
+          ],
+          child: await builder(),
+        ),
+      );
+    },
     (error, stackTrace) => log(
       error.toString(),
       stackTrace: stackTrace,

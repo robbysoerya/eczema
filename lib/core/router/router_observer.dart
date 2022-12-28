@@ -1,40 +1,36 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class RouterObserver extends RouteObserver {
   @override
-  bool debugObservingRoute(Route route) {
-    // TODO: implement debugObservingRoute
-    throw UnimplementedError();
-  }
-
-  @override
   void didPop(Route route, Route? previousRoute) {
-    // TODO: implement didPop
+    log(
+      '''didPop(route: ${route.settings.name}, previousRoute: ${previousRoute?.settings.name})''',
+    );
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    // TODO: implement didPush
+    log(
+      '''didPush(route: ${route.settings.name},previousRoute: ${previousRoute?.settings.name})
+      ''',
+    );
   }
 
   @override
   void didRemove(Route route, Route? previousRoute) {
-    // TODO: implement didRemove
+    log(
+      '''didRemove(route: ${route.settings.name},previousRoute: ${previousRoute?.settings.name})
+      ''',
+    );
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    // TODO: implement didReplace
+    log(
+      '''didReplace(newRoute: ${newRoute?.settings.name},oldRoute: ${oldRoute?.settings.name})
+      ''',
+    );
   }
-
-  @override
-  void didStartUserGesture(Route route, Route? previousRoute) {
-    // TODO: implement didStartUserGesture
-  }
-
-  @override
-  void didStopUserGesture() {
-    // TODO: implement didStopUserGesture
-  }
-
 }

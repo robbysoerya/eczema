@@ -9,5 +9,10 @@
         "description": "App bar title for Guess Nationality Page"
     },
     "guessNationalityButtonTitle": "Tebak",
-    "guessNationalityHintTextField": "Masukan nama kamu"
+    "guessNationalityHintTextField": "Masukan nama kamu",
+    "loginTitle": "Masuk",
+    "logoutTitle": "Keluar",
+    "resetButtonTitle": "Atur Ulang",
+    "loginUsernameHint": "Masukkan username",
+    "loginPasswordHint": "Masukkan kata sandi"
 }
