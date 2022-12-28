@@ -1,6 +1,7 @@
 import 'package:eczema/core/core.dart';
-import 'package:eczema/features/login/login.dart';
 import 'package:flutter/material.dart';
+
+import '../providers/providers.dart';
 
 class LoginPage extends BasePage {
   const LoginPage({super.key});

@@ -1,6 +1,7 @@
 import 'package:eczema/core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:eczema/features/guess_nationality/presentation/providers/providers.dart';
+
+import '../providers/providers.dart';
 
 class GuessNationalityPage extends BasePage {
   const GuessNationalityPage({super.key});
