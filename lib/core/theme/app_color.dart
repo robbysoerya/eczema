@@ -1,3 +1,1 @@
-class AppColor {
-  
-}
+class AppColor {}

@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:eczema/core/core.dart';
-import 'package:eczema/core/data/datasources/guess_nationality_remote_data_source.dart';
-import 'package:eczema/core/domain/entities/guess_nationality_entity.dart';
-import 'package:eczema/core/domain/repositories/guess_nationality_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -31,18 +28,19 @@ class GuessNationalityRepositoryImpl implements GuessNationalityRepository {
   });
 
   @override
-  Future<Either<Failure, GuessNationalityEntity>> getNationality() async {
+  Future<Either<Failure, GuessNationalityEntity>> getNationality(
+      String name) async {
     if (await networkInfo.isConnected) {
       try {
-        final resp = await remoteDataSource.getNationality();
+        final resp = await remoteDataSource.getNationality(name);
         return Right(resp);
-      } on ServerFailure {
-        return const Left(ServerFailure(''));
+      } on ServerException {
+        return const Left(ServerFailure());
       } on SocketException catch (e) {
         return Left(SocketFailure(e.message));
       }
     } else {
-      return const Left(ConnectionFailure('No Internet Connection'));
+      return const Left(NetworkFailure());
     }
   }
 }

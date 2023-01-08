@@ -1,1 +1,1 @@
-export 'presentation/view/guess_nationality_page.dart';
+export 'presentation/presentation.dart';

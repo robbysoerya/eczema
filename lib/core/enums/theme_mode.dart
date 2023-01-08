@@ -1,4 +1,1 @@
-enum ThemeModeEnum {
-  dark,
-  light
-}
+enum ThemeModeEnum { dark, light }

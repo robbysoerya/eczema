@@ -1,3 +1,1 @@
-mixin LoggerMixin {
-  
-}
+mixin LoggerMixin {}

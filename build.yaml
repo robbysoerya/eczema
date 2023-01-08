@@ -2,6 +2,8 @@ targets:
   $default:
     sources:
       - lib/core/data/**
+      - lib/core/domain/**
+      - lib/core/state/**
       - pubspec.*
       - $package$
     builders:

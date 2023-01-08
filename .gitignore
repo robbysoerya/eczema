@@ -47,4 +47,6 @@ app.*.map.json
 .idea
 .metadata
 *.g.dart
-.vscode
+*.freezed.dart
+.fvm/flutter_sdk
+config.json

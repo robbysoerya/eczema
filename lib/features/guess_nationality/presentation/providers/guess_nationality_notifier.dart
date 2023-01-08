@@ -1,34 +1,31 @@
-import 'package:eczema/core/base/base_state_notifier.dart';
-import 'package:eczema/core/data/repositories/guess_nationality_repository_impl.dart';
-import 'package:eczema/core/domain/repositories/guess_nationality_repository.dart';
-import 'package:eczema/features/guess_nationality/presentation/providers/guess_nationality_state.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final guessNationalityStateNotifierProvider =
-    StateNotifierProvider((ref) => GuessNationalityNotifier(ref));
+part of 'guess_nationality_provider.dart';
 
 class GuessNationalityNotifier
-    extends BaseStateNotifier<GuessNationalityState> {
+    extends BaseStateNotifier<AppStates<GuessNationalityEntity>> {
   GuessNationalityNotifier(StateNotifierProviderRef ref)
       : repository = ref.read(guessNationalityRepositoryProvider),
-        super(GuessNationalityInitial());
+        super(const AppStates.initial());
 
   final GuessNationalityRepository repository;
 
-  Future<void> guess() async {
-    state = GuessNationalityLoading();
-    final resp = await repository.getNationality();
+  Future<void> guess(String name) async {
+    state = const AppStates.loading();
+    final resp = await repository.getNationality(name);
     resp.fold(
       (failure) {
-        state = GuessNationalityFailure(failure: failure);
+        state = AppStates.error(failure);
       },
       (data) {
-        state = GuessNationalityLoaded(entity: data);
+        if (data.country.isEmpty) {
+          state = const AppStates.empty();
+        } else {
+          state = AppStates.success(data);
+        }
       },
     );
   }
 
   void reset() {
-    state = GuessNationalityInitial();
+    state = const AppStates.initial();
   }
 }
